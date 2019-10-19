@@ -5,33 +5,56 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MainActivity extends AppCompatActivity {
-
     private Random rng = new Random();
+
+    int number;
+    EditText numberInput;
+    TextView Result;
+    TextView RollDisplay;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        numberInput = (EditText) findViewById(R.id.numberInput);
         Button button = (Button) findViewById(R.id.button);
-        final TextView text = (TextView) findViewById(R.id.textView);
+        RollDisplay = (TextView) findViewById(R.id.RollDisplay);
+        Result = (TextView) findViewById(R.id.Result);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                number = Integer.valueOf(numberInput.getText().toString());
                 int random = rng.nextInt(6)+1;
-                text.setText(new StringBuilder().append(random));
+
+                RollDisplay.setText(new StringBuilder().append(random));
+
+                if (number == random){
+                    Result.setText("Congratulations");
+                }
+                else if ((number < 1) && (number > 6)){
+                    Result.setText("Please enter between 1-6 ");
+                }
+                else{
+                    Result.setText("");
+
+                }
+
+
             }
         });
 
     }
-
 
 
 }
